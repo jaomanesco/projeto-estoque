@@ -1,0 +1,75 @@
+/* Reset de estilos básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* Fundo cinza claro */
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff; /* Fundo branco do conteúdo */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 28px;
+    color: #333; /* Cor do título */
+}
+
+main {
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+section h2 {
+    font-size: 24px;
+    color: #007bff; /* Cor azul para títulos */
+    margin-bottom: 10px;
+}
+
+.produtos-lista {
+    list-style-type: none;
+    padding: 0;
+}
+
+.produtos-lista li {
+    background-color: #fff; /* Fundo branco dos itens da lista */
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.produtos-lista li a {
+    display: inline-block;
+    margin-left: 10px;
+    text-decoration: none;
+    color: #007bff; /* Cor azul para links */
+}
+
+.produtos-lista li a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+    font-size: 14px;
+}
