@@ -2,6 +2,16 @@
 // Arquivo de configuração com a conexão ao banco de dados
 include 'backend/config.php';
 
+// Inicia a sessão
+session_start();
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['usuario_logado'])) {
+    // Se não estiver logado, redireciona para a página de login
+    header('Location: login.php');
+    exit();
+}
+
 // Consulta os produtos do banco de dados
 $sql = "SELECT id, nome FROM produtos";
 $result = $conn->query($sql);
@@ -45,6 +55,7 @@ $result = $conn->query($sql);
         </main>
         <footer>
             <p>&copy; <?php echo date('Y'); ?> Empresa XYZ</p>
+            <p><a href="logout.php">Logout</a></p> <!-- Adiciona o link de logout -->
         </footer>
     </div>
 
