@@ -40,10 +40,12 @@ $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         // Loop através dos resultados da consulta
                         while($row = $result->fetch_assoc()) {
+                            $id = htmlspecialchars($row["id"]);
+                            $nome = htmlspecialchars($row["nome"]);
                             echo "<li>";
-                            echo "<strong>ID:</strong> " . $row["id"]. " - <strong>Nome:</strong> " . $row["nome"];
-                            echo " <a href='backend/editar_produto.php?id=" . $row["id"] . "'>Editar</a>";
-                            echo " <a href='backend/excluir_produto.php?id=" . $row["id"] . "' onclick='return confirmarExclusao(\"" . $row["nome"] . "\")'>Excluir</a>";
+                            echo "<strong>ID:</strong> " . $id . " - <strong>Nome:</strong> " . $nome;
+                            echo " <a href='backend/editar_produto.php?id=" . $id . "'>Editar</a>";
+                            echo " <a href='backend/excluir_produto.php?id=" . $id . "' onclick='return confirmarExclusao(\"" . $nome . "\")'>Excluir</a>";
                             echo "</li>";
                         }
                     } else {
@@ -55,7 +57,7 @@ $result = $conn->query($sql);
         </main>
         <footer>
             <p>&copy; <?php echo date('Y'); ?> Empresa XYZ</p>
-            <p><a href="logout.php">Logout</a></p> <!-- Adiciona o link de logout -->
+            <p><a href="backend/logout.php">Logout</a></p> <!-- Adiciona o link de logout -->
         </footer>
     </div>
 
