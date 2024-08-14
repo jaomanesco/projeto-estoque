@@ -38,12 +38,14 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listar Produtos</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="frontend/css/output.css">
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+    <?php include "frontend/views/navbar.php"?>
     <div class="container">
         <header>
             <h1>Listagem de Produtos</h1>
