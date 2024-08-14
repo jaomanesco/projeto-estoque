@@ -6,17 +6,21 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0; /* Fundo cinza claro */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5; /* Fundo cinza claro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .container {
-    max-width: 800px;
-    margin: 20px auto;
+    max-width: 1000px;
+    margin: 20px;
     background-color: #fff; /* Fundo branco do conteúdo */
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 header {
@@ -25,46 +29,106 @@ header {
 }
 
 header h1 {
-    font-size: 28px;
+    font-size: 32px;
     color: #333; /* Cor do título */
+    margin-bottom: 10px;
+}
+
+header .btn-adicionar {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 10px;
+    border: 1px solid #007bff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+header .btn-adicionar:hover {
+    background-color: #0056b3;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+header .btn-adicionar:active {
+    background-color: #004085;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 main {
     padding: 20px;
 }
 
-section {
+section h2 {
+    font-size: 28px;
+    color: #007bff; /* Cor azul para títulos */
+    margin-bottom: 15px;
+}
+
+.msg-success {
+    color: #28a745;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.produtos-tabela {
+    width: 100%;
+    border-collapse: collapse;
     margin-bottom: 20px;
 }
 
-section h2 {
-    font-size: 24px;
-    color: #007bff; /* Cor azul para títulos */
-    margin-bottom: 10px;
+.produtos-tabela th,
+.produtos-tabela td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
 }
 
-.produtos-lista {
-    list-style-type: none;
-    padding: 0;
+.produtos-tabela th {
+    background-color: #007bff;
+    color: white;
 }
 
-.produtos-lista li {
-    background-color: #fff; /* Fundo branco dos itens da lista */
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.produtos-tabela tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
 
-.produtos-lista li a {
-    display: inline-block;
-    margin-left: 10px;
+.produtos-tabela tr:hover {
+    background-color: #ddd;
+}
+
+.produtos-tabela a {
+    color: #007bff;
     text-decoration: none;
-    color: #007bff; /* Cor azul para links */
+    font-weight: bold;
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.produtos-lista li a:hover {
-    text-decoration: underline;
+.produtos-tabela a.btn-editar {
+    background-color: #17a2b8;
+    border: 1px solid #17a2b8;
+}
+
+.produtos-tabela a.btn-editar:hover {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.produtos-tabela a.btn-excluir {
+    background-color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.produtos-tabela a.btn-excluir:hover {
+    background-color: #c82333;
+    color: white;
 }
 
 footer {
@@ -74,58 +138,17 @@ footer {
     font-size: 14px;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-.login-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    width: 300px;
-}
-
-.login-container h2 {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.login-container form {
-    display: flex;
-    flex-direction: column;
-}
-
-.login-container form label {
-    margin-bottom: 10px;
-}
-
-.login-container form input {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-
-.login-container form input[type="submit"] {
-    background-color: #4CAF50;
+.btn-logout {
+    background-color: #6c757d;
     color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    border: 1px solid #6c757d;
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.login-container form input[type="submit"]:hover {
-    background-color: #45a049;
-}
-
-.error-message {
-    color: #ff0000;
-    margin-top: 10px;
-    text-align: center;
+.btn-logout:hover {
+    background-color: #5a6268;
 }

@@ -5,20 +5,24 @@ include 'config.php'; // Arquivo de configuração com a conexão ao banco de da
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtém os dados do formulário
     $nome = $_POST['nome'];
-    $descricao = $_POST['descricao'];
     $quantidade = $_POST['quantidade'];
-    $preco = $_POST['preco'];
+    $categoria = $_POST['categoria'];
+    $descricao = $_POST['descricao'];
+    // Prepara a query utilizando prepared statements para prevenir SQL Injection
+    $stmt = $conn->prepare("INSERT INTO produtos (nome, quantidade, categoria, descricao) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $nome, $quantidade, $categoria, $descricao);
 
-    // Insere os dados no banco de dados
-    $sql = "INSERT INTO produtos (nome, descricao, quantidade, preco) VALUES ('$nome', '$descricao', '$quantidade', '$preco')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Produto inserido com sucesso!";
+    // Executa a query
+    if ($stmt->execute()) {
+        header('Location: ../index.php?msg=Produto inserido com sucesso!');
     } else {
-        echo "Erro ao inserir produto: " . $conn->error;
+        echo "Erro ao inserir produto: " . $stmt->error;
     }
+
+    // Fecha a statement
+    $stmt->close();
 
     // Fecha a conexão
     $conn->close();
 }
-?>
+

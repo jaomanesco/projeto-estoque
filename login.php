@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } else {
         // Usuário não encontrado
-        $error_message = "Usuário ou senha incorretos.";
+        $error_message = "Não encontramos seu usuario.";
     }
 }
 

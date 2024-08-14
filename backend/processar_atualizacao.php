@@ -1,24 +1,35 @@
 <?php
-include 'config.php'; // Arquivo de configuração com a conexão ao banco de dados
+include 'config.php'; // Inclua o arquivo de configuração com a conexão ao banco de dados
 
-// Verifica se o formulário foi enviado
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtém os dados do formulário
-    $id = $_POST['id'];
-    $nome = $_POST['nome'];
-    $descricao = $_POST['descricao'];
-    $quantidade = $_POST['quantidade'];
-    $preco = $_POST['preco'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['id']) && is_numeric($_POST['id'])) {
+        $id = intval($_POST['id']);
+        $nome = $_POST['nome'];
+        $categoria = $_POST['categoria'];
+        $descricao = $_POST['descricao'];
+        $quantidade = intval($_POST['quantidade']);
 
-    // Atualiza os dados no banco de dados
-    $sql = "UPDATE produtos SET nome='$nome', descricao='$descricao', quantidade='$quantidade', preco='$preco' WHERE id=$id";
+        // Prepara e executa a atualização do produto
+        $stmt = $conn->prepare("UPDATE produtos SET nome = ?, categoria = ?, descricao = ?, quantidade = ? WHERE id = ?");
+        $stmt->bind_param("sssii", $nome, $categoria, $descricao, $quantidade, $id);
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Produto atualizado com sucesso!";
+        if ($stmt->execute()) {
+            // Redireciona para a página de listagem com uma mensagem de sucesso
+            header("Location: ../index.php?msg=" . urlencode("Produto atualizado com sucesso!"));
+            exit();
+        } else {
+            echo "Erro ao atualizar produto: " . $stmt->error;
+        }
+
+        // Fecha a statement
+        $stmt->close();
     } else {
-        echo "Erro ao atualizar produto: " . $conn->error;
+        echo "ID do produto não especificado ou inválido.";
     }
-
-    // Fecha a conexão
-    $conn->close();
+} else {
+    echo "Método de requisição inválido.";
 }
+
+// Fecha a conexão
+$conn->close();
+

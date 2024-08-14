@@ -20,6 +20,11 @@
 
             <input type="submit" value="Criar Usuário">
         </form>
+         <!-- Botão de voltar -->
+         <button class="back-button" onclick="window.history.back();">
+    <i class="fas fa-arrow-left"></i>
+</button>
+    </button>
     </div>
 </body>
 </html>
