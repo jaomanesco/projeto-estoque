@@ -45,7 +45,20 @@ $result = $conn->query($sql);
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <?php include "frontend/views/navbar.php"?>
+    <div class="navbar">
+        <div class="logo">
+            <img src="frontend/assets/logo-no-bc.png" alt="logo saine">
+        </div>
+        <div class="options">
+            <a href="#">Chamados</a>
+            <a href="#">Ativos TI</a>
+            <a href="#">Estoque</a>
+            <a href="#">Faq</a>
+        </div>
+        <div class="profile">
+            <img src="frontend/assets/circulo.png" alt="perfil">
+        </div>  
+    </div>
     <div class="container">
         <header>
             <h1>Listagem de Produtos</h1>
