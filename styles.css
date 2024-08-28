@@ -1,183 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
+:root {
+    --box-shadow: 4px 4px 4px #00000020;
+}
 
-/* Reset de estilos básico */
 * {
     margin: 0;
     padding: 0;
+    text-decoration: none;
+    border: none;
     box-sizing: border-box;
+    font-family: "Montserrat";
 }
 
 body {
     display: flex;
     flex-direction: column;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #ececec; /* Fundo cinza claro */
-    display: flex;
     justify-content: center;
     align-items: center;
+    font-family: sans-serif;
+    background-color: #ececec;
     min-height: 100vh;
 }
 
 .container {
-    max-width: 1000px;
-    margin: 20px;
-    background-color: #ffffff; /* Fundo branco do conteúdo */
-    padding: 20px;
+    margin: 2rem;
+    background-color: #fff;
+    padding: 2rem;
     border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--box-shadow);
+    width: 68rem;
 }
 
 .navbar {
     display: flex;
     background-color: #ffffff;
     width: 100%;
-    height: 6rem;
+    height: 7rem;
     justify-content: space-between;
     padding: 1rem;
     align-items: center;
+    box-shadow: 4px 4px 4px #00000020;
 }
+
+.links {
+    display: flex;
+    font-size: 1.7rem;
+    gap: 2rem;
+}
+
 .logo, .profile {
     height: 4rem;
     width: 4rem;
 }
 
-.options{
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-}
-
-.options a{
-    text-align: center;
-    font-size: 1.5rem;
-    font-family: 'montserrat';
-}
-
 header {
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 68rem;
+    margin: 2rem;
+    background-color: #ffffff; /* Fundo branco do conteúdo */
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+    margin-top: 4rem;
 }
 
-header h1 {
-    font-size: 32px;
-    color: #333; /* Cor do título */
-    margin-bottom: 10px;
+header input, header select {
+    background-color: #d6d6d6;
+    height: 4rem;
+    width: 17rem;
+    border-radius: .3rem;
 }
 
-header .btn-adicionar {
-    display: inline-block;
-    padding: 12px 24px;
-    background-color: #007bff;
+header button{
+    background-color: #03658c;
     color: white;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-    margin-top: 10px;
-    border: 1px solid #007bff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, box-shadow 0.3s;
+    font-size: 1.2rem;
+    height: 4rem;
+    width: 9rem;
+    border-radius: .3rem;
 }
 
-header .btn-adicionar:hover {
-    background-color: #0056b3;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+header label {
+    font-size: 1.6rem;
+    color: #000000; /* Cor black para títulos */
 }
 
-header .btn-adicionar:active {
-    background-color: #004085;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
 }
 
-main {
-    padding: 20px;
-}
-
-section h2 {
-    font-size: 28px;
-    color: #007bff; /* Cor azul para títulos */
-    margin-bottom: 15px;
-}
 
 .msg-success {
     color: #28a745;
     font-weight: bold;
     margin-bottom: 15px;
-}
-
-.produtos-tabela {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-.produtos-tabela th,
-.produtos-tabela td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
-}
-
-.produtos-tabela th {
-    background-color: #007bff;
-    color: white;
-}
-
-.produtos-tabela tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-.produtos-tabela tr:hover {
-    background-color: #ddd;
-}
-
-.produtos-tabela a {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 4px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.produtos-tabela a.btn-editar {
-    background-color: #17a2b8;
-    border: 1px solid #17a2b8;
-}
-
-.produtos-tabela a.btn-editar:hover {
-    background-color: #17a2b8;
-    color: white;
-}
-
-.produtos-tabela a.btn-excluir {
-    background-color: #dc3545;
-    border: 1px solid #dc3545;
-}
-
-.produtos-tabela a.btn-excluir:hover {
-    background-color: #c82333;
-    color: white;
-}
-
-footer {
-    text-align: center;
-    margin-top: 20px;
-    color: #666;
-    font-size: 14px;
-}
-
-.btn-logout {
-    background-color: #6c757d;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 16px;
-    border: 1px solid #6c757d;
-    transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-.btn-logout:hover {
-    background-color: #5a6268;
 }

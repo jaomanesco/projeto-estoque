@@ -33,6 +33,7 @@ $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,12 +45,13 @@ $result = $conn->query($sql);
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body>
     <div class="navbar">
         <div class="logo">
             <img src="frontend/assets/logo-no-bc.png" alt="logo saine">
         </div>
-        <div class="options">
+        <div class="links">
             <a href="#">Chamados</a>
             <a href="#">Ativos TI</a>
             <a href="#">Estoque</a>
@@ -57,82 +59,82 @@ $result = $conn->query($sql);
         </div>
         <div class="profile">
             <img src="frontend/assets/circulo.png" alt="perfil">
-        </div>  
-    </div>
-    <div class="container">
-        <header>
-            <h1>Listagem de Produtos</h1>
-        </header>
-        <main>
-            <section>
-                <h2>Filtros:</h2>
-                <div class="filters">
-                    <form id="filtersForm" method="GET" action="">
-                        <input type="text" id="searchInput" name="search" placeholder="Buscar por nome..." value="<?php echo htmlspecialchars($searchTerm); ?>">
-                        <select id="categoryFilter" name="category">
-                            <option value="">Todas as Categorias</option>
-                            <?php
-                            // Consulta para obter categorias distintas
-                            $categoryResult = $conn->query("SELECT DISTINCT categoria FROM produtos");
-                            while ($category = $categoryResult->fetch_assoc()) {
-                                $categoria = htmlspecialchars($category['categoria']);
-                                $selected = ($categoria == $categoryFilter) ? 'selected' : '';
-                                echo "<option value='$categoria' $selected>$categoria</option>";
-                            }
-                            ?>
-                        </select>
-                        <button type="submit">Filtrar</button>
-                    </form>
-                </div>
-                <h2>Produtos Disponíveis:</h2>
-                <table class="produtos-tabela">
-                    <thead>
-                        <tr>
-                            <th>id</th>
-                            <th>Nome</th>
-                            <th>Quantidade</th>
-                            <th>Categoria</th>
-                            <th>Descrição</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="productTableBody">
-                        <?php
-                        // Verifica se há produtos para listar
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                $id = htmlspecialchars($row["id"]);
-                                $nome = htmlspecialchars($row["nome"]);
-                                $quantidade = htmlspecialchars($row["quantidade"]);
-                                $categoria = htmlspecialchars($row["categoria"]);
-                                $descricao = htmlspecialchars($row["descricao"]);
-                                echo "<tr>";
-                                echo "<td>$id</td>";
-                                echo "<td>$nome</td>";
-                                echo "<td>$quantidade</td>";
-                                echo "<td>$categoria</td>";
-                                echo "<td>$descricao</td>";
-                                echo "<td>";
-                                echo "<a href='backend/editar_produto.php?id=$id' class='btn-editar'>Editar</a> ";
-                                echo "<a href='#' class='btn-excluir' data-id='$id' data-nome='$nome'>Excluir</a>";
-                                echo "</td>";
-                                echo "</tr>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='5'>Nenhum produto encontrado.</td></tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </section>
-            <a href="backend/inserir_produto.php" class="btn-adicionar">Adicionar Novo Produto</a>
-        </main>
-        <footer>
-            <p>&copy; <?php echo date('Y'); ?> Empresa XYZ</p>
-            <p><a href="backend/logout.php">Logout</a></p>
-        </footer>
+        </div>
     </div>
 
+<header>
+    <form id="filtersForm" method="GET" action="">
+        <div>
+            <label for="searchInput">Buscar:</label>
+            <input type="text" id="searchInput" name="search" value="<?php echo htmlspecialchars($searchTerm); ?>">
+        </div>
+        <div>
+            <label for="categoryFilter">Categoria:</label>
+            <select id="categoryFilter" name="category">
+                <option value=""></option>
+                <?php
+                // Consulta para obter categorias distintas
+                $categoryResult = $conn->query("SELECT DISTINCT categoria FROM produtos");
+                while ($category = $categoryResult->fetch_assoc()) {
+                    $categoria = htmlspecialchars($category['categoria']);
+                    $selected = ($categoria == $categoryFilter) ? 'selected' : '';
+                    echo "<option value='$categoria' $selected>$categoria</option>";
+                }
+                ?>
+            </select>    
+        </div>
+
+        <button type="submit">Buscar</button>
+    </form>
+</header>
+
+<div class="container">
+    <h2>Produtos Disponíveis:</h2>
+    <table class="produtos-tabela">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Categoria</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="productTableBody">
+            <?php
+            // Verifica se há produtos para listar
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $id = htmlspecialchars($row["id"]);
+                    $nome = htmlspecialchars($row["nome"]);
+                    $quantidade = htmlspecialchars($row["quantidade"]);
+                    $categoria = htmlspecialchars($row["categoria"]);
+                    $descricao = htmlspecialchars($row["descricao"]);
+                    echo "<tr>";
+                    echo "<td>$id</td>";
+                    echo "<td>$nome</td>";
+                    echo "<td>$quantidade</td>";
+                    echo "<td>$categoria</td>";
+                    echo "<td>$descricao</td>";
+                    echo "<td>";
+                    echo "<a href='backend/editar_produto.php?id=$id' class='btn-editar'>Editar</a> ";
+                    echo "<a href='#' class='btn-excluir' data-id='$id' data-nome='$nome'>Excluir</a>";
+                    echo "</td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='5'>Nenhum produto encontrado.</td></tr>";
+            }
+            ?>
+        </tbody>
+    </table>
+    <a href="backend/inserir_produto.php" class="btn-adicionar">Adicionar Novo Produto</a>
+    <footer>
+        <p>&copy; <?php echo date('Y'); ?> Empresa XYZ</p>
+        <p><a href="backend/logout.php">Logout</a></p>
+    </footer>
+</div>
     <!-- Script para confirmar exclusão com SweetAlert2 -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -162,6 +164,7 @@ $result = $conn->query($sql);
         });
     </script>
 </body>
+
 </html>
 
 <?php
