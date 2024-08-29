@@ -89,15 +89,12 @@ $result = $conn->query($sql);
 </header>
 
 <div class="container">
-    <h2>Produtos Disponíveis:</h2>
     <table class="produtos-tabela">
         <thead>
             <tr>
-                <th>id</th>
                 <th>Nome</th>
-                <th>Quantidade</th>
+                <th>Qtd.</th>
                 <th>Categoria</th>
-                <th>Descrição</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -110,16 +107,13 @@ $result = $conn->query($sql);
                     $nome = htmlspecialchars($row["nome"]);
                     $quantidade = htmlspecialchars($row["quantidade"]);
                     $categoria = htmlspecialchars($row["categoria"]);
-                    $descricao = htmlspecialchars($row["descricao"]);
                     echo "<tr>";
-                    echo "<td>$id</td>";
                     echo "<td>$nome</td>";
                     echo "<td>$quantidade</td>";
                     echo "<td>$categoria</td>";
-                    echo "<td>$descricao</td>";
                     echo "<td>";
-                    echo "<a href='backend/editar_produto.php?id=$id' class='btn-editar'>Editar</a> ";
-                    echo "<a href='#' class='btn-excluir' data-id='$id' data-nome='$nome'>Excluir</a>";
+                    echo "<a href='#' class='btn-editar' data-id='$id' data-nome='$nome' data-categoria='$categoria' data-descricao='" . htmlspecialchars($row["descricao"]) . "' data-quantidade='$quantidade'><img src='frontend/assets/lapis.png' alt='Editar' /></a>";
+                    echo "<a href='#' class='btn-excluir' data-id='$id' data-nome='$nome'> </a>";
                     echo "</td>";
                     echo "</tr>";
                 }
@@ -135,34 +129,77 @@ $result = $conn->query($sql);
         <p><a href="backend/logout.php">Logout</a></p>
     </footer>
 </div>
-    <!-- Script para confirmar exclusão com SweetAlert2 -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Função para confirmar exclusão com SweetAlert2
-            document.querySelectorAll('.btn-excluir').forEach(button => {
-                button.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    const id = this.getAttribute('data-id');
-                    const nome = this.getAttribute('data-nome');
 
-                    Swal.fire({
-                        title: 'Tem certeza?',
-                        text: `Você realmente deseja excluir o produto '${nome}'?`,
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Sim, excluir!',
-                        cancelButtonText: 'Cancelar'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = `backend/excluir_produto.php?id=${id}`;
-                        }
-                    });
-                });
-            });
-        });
-    </script>
+<!-- Modal para Editar Produto -->
+<div id="editProductModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Editar Produto</h2>
+        <form id="editProductForm" method="post" action="backend/processar_atualizacao.php">
+            <input type="hidden" id="modal-id" name="id">
+            
+            <label for="modal-nome">Nome:</label>
+            <input type="text" id="modal-nome" name="nome" required><br><br>
+            
+            <label for="modal-categoria">Categoria:</label>
+            <input type="text" id="modal-categoria" name="categoria" required><br><br>
+            
+            <label for="modal-descricao">Descrição:</label><br>
+            <textarea id="modal-descricao" name="descricao" rows="4" cols="50"></textarea><br><br>
+            
+            <label for="modal-quantidade">Quantidade:</label>
+            <input type="number" id="modal-quantidade" name="quantidade" required><br><br>
+            
+            <input type="submit" value="Atualizar Produto">
+        </form>
+    </div>
+</div>
+
+<script>
+    // Obtém o modal e o botão de fechar
+    var modal = document.getElementById("editProductModal");
+    var span = document.getElementsByClassName("close")[0];
+
+    // Função para abrir o modal e preencher os campos
+    function openEditModal(id, nome, categoria, descricao, quantidade) {
+        document.getElementById("modal-id").value = id;
+        document.getElementById("modal-nome").value = nome;
+        document.getElementById("modal-categoria").value = categoria;
+        document.getElementById("modal-descricao").value = descricao;
+        document.getElementById("modal-quantidade").value = quantidade;
+        
+        modal.style.display = "block";
+    }
+
+    // Função para fechar o modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Fecha o modal se o usuário clicar fora do modal
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // Adiciona evento de clique aos botões de edição
+    document.querySelectorAll(".btn-editar").forEach(button => {
+        button.onclick = function(event) {
+            event.preventDefault();
+            // Obtém os dados do produto
+            var id = this.getAttribute("data-id");
+            var nome = this.getAttribute("data-nome");
+            var categoria = this.getAttribute("data-categoria");
+            var descricao = this.getAttribute("data-descricao");
+            var quantidade = this.getAttribute("data-quantidade");
+            
+            // Abre o modal e preenche os dados
+            openEditModal(id, nome, categoria, descricao, quantidade);
+        }
+    });
+</script>
+
 </body>
 
 </html>

@@ -24,9 +24,9 @@ body {
 }
 
 .container {
+    font-size: 1.2rem;
     margin: 2rem;
     background-color: #fff;
-    padding: 2rem;
     border-radius: 8px;
     box-shadow: var(--box-shadow);
     width: 68rem;
@@ -95,9 +95,101 @@ form {
     gap: 2rem;
 }
 
+table {
+    width: 100%;   
+}
 
-.msg-success {
-    color: #28a745;
+.produtos-tabela th{
+    padding-right: 7rem;
+    font-size: 1.6rem;
+    color: #fff;
+    background-color: #03658c;
+    height: 6rem;
+}
+
+.container tr:nth-child(even){background-color: #e0e0e0;}
+
+.produtos-tabela td{
+    padding-left: 2rem;
+    height: 7rem;
+    text-align: left;
+}
+
+/* Modal Container */
+.modal {
+    display: none; /* Oculta o modal por padrão */
+    position: fixed; /* Fixa o modal na tela */
+    z-index: 1000; /* Garante que o modal fique sobre outros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Adiciona rolagem se o conteúdo exceder a altura da tela */
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+    backdrop-filter: blur(5px); /* Aplica o efeito de desfoque no fundo */
+    -webkit-backdrop-filter: blur(5px); /* Para suporte no Safari */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto; /* Centraliza o modal na tela */
+    padding: 20px;
+    border: 4px solid #03658c; /* Borda azul */
+    width: 50%; /* Largura do modal é 50% da tela */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para dar um efeito de profundidade */
+    border-radius: 10px; /* Bordas arredondadas */
+    position: relative; /* Necessário para posicionar o botão de fechar */
+}
+
+/* Fechar Botão */
+.close {
+    color: #03658c; /* Cor do botão de fechar */
+    float: right;
+    font-size: 28px;
     font-weight: bold;
-    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+/* Fechar Botão Hover */
+.close:hover,
+.close:focus {
+    color: #024e7c; /* Cor do botão de fechar ao passar o mouse */
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Formulário */
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Inputs e Textarea */
+.modal-content input[type="text"],
+.modal-content input[type="number"],
+.modal-content textarea {
+    background-color: #d6d6d6; /* Fundo cinza */
+    border: 1px solid #ccc; /* Borda cinza clara */
+    border-radius: .3rem; /* Bordas arredondadas */
+    padding: 10px; /* Espaçamento interno */
+    margin-bottom: 15px; /* Espaçamento entre os campos */
+    width: 100%; /* Largura total do container */
+    box-sizing: border-box; /* Inclui padding e border na largura total */
+}
+
+/* Botão de Submit */
+.modal-content input[type="submit"] {
+    background-color: #03658c; /* Fundo azul */
+    color: white; /* Texto branco */
+    border: none;
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Botão de Submit Hover */
+.modal-content input[type="submit"]:hover {
+    background-color: #024e7c; /* Azul escuro ao passar o mouse */
 }
