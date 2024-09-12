@@ -37,7 +37,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 </head>
 <body>
     <h2>Editar Produto</h2>
-    <form action="processar_atualizacao.php" method="post">
+    <form action="processar_atualizacao.php" method="post" id="formEdit">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
         
         <label for="nome">Nome:</label>

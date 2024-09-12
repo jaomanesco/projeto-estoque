@@ -50,8 +50,12 @@ body {
 }
 
 .logo, .profile {
-    height: 4rem;
-    width: 4rem;
+    height: 7rem;
+    width: 7rem;
+}
+
+.profile {
+    margin-top: 2rem;
 }
 
 header {
@@ -74,7 +78,7 @@ header input, header select {
     border-radius: .3rem;
 }
 
-header button{
+header button {
     background-color: #03658c;
     color: white;
     font-size: 1.2rem;
@@ -88,7 +92,7 @@ header label {
     color: #000000; /* Cor black para títulos */
 }
 
-form {
+header form {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -96,10 +100,10 @@ form {
 }
 
 table {
-    width: 100%;   
+    width: 100%;
 }
 
-.produtos-tabela th{
+.produtos-tabela th {
     padding-right: 7rem;
     font-size: 1.6rem;
     color: #fff;
@@ -107,9 +111,11 @@ table {
     height: 6rem;
 }
 
-.container tr:nth-child(even){background-color: #e0e0e0;}
+.container tr:nth-child(even) {
+    background-color: #e0e0e0;
+}
 
-.produtos-tabela td{
+.produtos-tabela td {
     padding-left: 2rem;
     height: 7rem;
     text-align: left;
@@ -128,59 +134,84 @@ table {
     background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
     backdrop-filter: blur(5px); /* Aplica o efeito de desfoque no fundo */
     -webkit-backdrop-filter: blur(5px); /* Para suporte no Safari */
+    display: flex; /* Flexbox para centralizar o modal */
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
 }
 
 /* Modal Content */
 .modal-content {
     background-color: #fff;
-    margin: 5% auto; /* Centraliza o modal na tela */
-    padding: 20px;
-    border: 4px solid #03658c; /* Borda azul */
     width: 50%; /* Largura do modal é 50% da tela */
+    max-height: 700px;
+    max-width: 700px; /* Largura máxima do modal */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para dar um efeito de profundidade */
     border-radius: 10px; /* Bordas arredondadas */
     position: relative; /* Necessário para posicionar o botão de fechar */
+    padding: 1rem; /* Espaçamento interno do modal */
+    box-sizing: border-box; /* Inclui padding e border na largura total */
+    display: flex;
+    flex-direction: column; /* Organiza os elementos verticalmente */
 }
 
-/* Fechar Botão */
-.close {
-    color: #03658c; /* Cor do botão de fechar */
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
+/* Título */
+#titulo {
+    font-size: 2rem;
+    margin-bottom: 1rem; /* Espaçamento abaixo do título */
 }
 
-/* Fechar Botão Hover */
-.close:hover,
-.close:focus {
-    color: #024e7c; /* Cor do botão de fechar ao passar o mouse */
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/* Formulário */
+/* Formulário no Modal */
 .modal-content form {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Organiza inputs verticalmente */
+    gap: 0.7rem; /* Espaçamento entre os campos do formulário */
 }
 
 /* Inputs e Textarea */
+.modal-content .form-group {
+    display: flex; /* Flexbox para alinhar label e input horizontalmente */
+    align-items: center; /* Alinha verticalmente no centro */
+    justify-content: center;
+}
+
+.modal-content label {
+    flex: 0 0 25%; /* Largura do label, ajuste conforme necessário */
+    font-size: 1rem; /* Tamanho do texto do label */
+}
+
 .modal-content input[type="text"],
 .modal-content input[type="number"],
 .modal-content textarea {
-    background-color: #d6d6d6; /* Fundo cinza */
+    padding: 0.2rem; /* Espaçamento interno dos inputs */
+    background-color: #d6d6d6; /* Fundo cinza claro */
     border: 1px solid #ccc; /* Borda cinza clara */
     border-radius: .3rem; /* Bordas arredondadas */
-    padding: 10px; /* Espaçamento interno */
-    margin-bottom: 15px; /* Espaçamento entre os campos */
-    width: 100%; /* Largura total do container */
     box-sizing: border-box; /* Inclui padding e border na largura total */
+    flex: 1; /* Expande o input para preencher o espaço restante */
+}
+
+/* Contêiner do botão */
+.button-container {
+    display: flex;
+    justify-content: flex-end; /* Alinha o botão à direita */
+    gap: 1rem;
 }
 
 /* Botão de Submit */
 .modal-content input[type="submit"] {
+    width: 8rem ;
     background-color: #03658c; /* Fundo azul */
+    color: white; /* Texto branco */
+    border: none;
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.modal-content input[type="button"] {
+    width: 8rem ;
+    background-color: #c10e0e; /* Fundo azul */
     color: white; /* Texto branco */
     border: none;
     border-radius: 5px; /* Bordas arredondadas */
@@ -192,4 +223,8 @@ table {
 /* Botão de Submit Hover */
 .modal-content input[type="submit"]:hover {
     background-color: #024e7c; /* Azul escuro ao passar o mouse */
+}
+
+.modal-content input[type="button"]:hover {
+    background-color: #9c1717;
 }

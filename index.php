@@ -65,11 +65,11 @@ $result = $conn->query($sql);
 <header>
     <form id="filtersForm" method="GET" action="">
         <div>
-            <label for="searchInput">Buscar:</label>
+            <label for="searchInput">Buscar</label>
             <input type="text" id="searchInput" name="search" value="<?php echo htmlspecialchars($searchTerm); ?>">
         </div>
         <div>
-            <label for="categoryFilter">Categoria:</label>
+            <label for="categoryFilter">Categoria</label>
             <select id="categoryFilter" name="category">
                 <option value=""></option>
                 <?php
@@ -133,28 +133,37 @@ $result = $conn->query($sql);
 <!-- Modal para Editar Produto -->
 <div id="editProductModal" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Editar Produto</h2>
+        <div id="titulo"><h2>Edite Aqui</h2></div>
         <form id="editProductForm" method="post" action="backend/processar_atualizacao.php">
             <input type="hidden" id="modal-id" name="id">
             
-            <label for="modal-nome">Nome:</label>
-            <input type="text" id="modal-nome" name="nome" required><br><br>
+            <div class="form-group">
+                <label for="modal-nome">Nome</label>
+                <input type="text" id="modal-nome" name="nome" required>
+            </div>
+
+            <div class="form-group">
+                <label for="modal-quantidade">Quantidade</label>
+                <input type="number" id="modal-quantidade" name="quantidade" required>
+            </div>
+
+            <div class="form-group">
+                <label for="modal-categoria">Categoria</label>
+                <input type="text" id="modal-categoria" name="categoria" required>
+            </div>
+
+            <div class="form-group">
+                <label for="modal-descricao">Descrição</label>
+                <textarea id="modal-descricao" name="descricao" rows="4" cols="50"></textarea>
+            </div>
             
-            <label for="modal-categoria">Categoria:</label>
-            <input type="text" id="modal-categoria" name="categoria" required><br><br>
-            
-            <label for="modal-descricao">Descrição:</label><br>
-            <textarea id="modal-descricao" name="descricao" rows="4" cols="50"></textarea><br><br>
-            
-            <label for="modal-quantidade">Quantidade:</label>
-            <input type="number" id="modal-quantidade" name="quantidade" required><br><br>
-            
-            <input type="submit" value="Atualizar Produto">
+            <div class="button-container">
+                <input  id="button_excluir" type="button" value="Excluir">
+                <input type="submit" value="Editar">
+            </div>
         </form>
     </div>
 </div>
-
 <script>
     // Obtém o modal e o botão de fechar
     var modal = document.getElementById("editProductModal");
