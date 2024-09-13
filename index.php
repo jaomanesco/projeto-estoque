@@ -88,6 +88,13 @@ $result = $conn->query($sql);
     </form>
 </header>
 
+<div class="add-button-container">
+        <a href="backend/inserir_produto.php" class="add-button">
+            <img src="frontend/assets/mais.png" alt="Adicionar" class="add-button-image">
+            Adicione Aqui
+        </a>
+    </div>
+
 <div class="container">
     <table class="produtos-tabela">
         <thead>
@@ -133,6 +140,7 @@ $result = $conn->query($sql);
 <!-- Modal para Editar Produto -->
 <div id="editProductModal" class="modal">
     <div class="modal-content">
+        <span class="close">&times;</span>
         <div id="titulo"><h2>Edite Aqui</h2></div>
         <form id="editProductForm" method="post" action="backend/processar_atualizacao.php">
             <input type="hidden" id="modal-id" name="id">
@@ -158,17 +166,13 @@ $result = $conn->query($sql);
             </div>
             
             <div class="button-container">
-                <input  id="button_excluir" type="button" value="Excluir">
+                <input id="button_excluir" type="button" value="Excluir">
                 <input type="submit" value="Editar">
             </div>
         </form>
     </div>
 </div>
 <script>
-    // Obtém o modal e o botão de fechar
-    var modal = document.getElementById("editProductModal");
-    var span = document.getElementsByClassName("close")[0];
-
     // Função para abrir o modal e preencher os campos
     function openEditModal(id, nome, categoria, descricao, quantidade) {
         document.getElementById("modal-id").value = id;
@@ -176,39 +180,79 @@ $result = $conn->query($sql);
         document.getElementById("modal-categoria").value = categoria;
         document.getElementById("modal-descricao").value = descricao;
         document.getElementById("modal-quantidade").value = quantidade;
-        
-        modal.style.display = "block";
+        document.getElementById("editProductModal").style.display = "block";
     }
 
     // Função para fechar o modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
+    document.getElementsByClassName("close")[0].onclick = function() {
+        document.getElementById("editProductModal").style.display = "none";
+    };
 
-    // Fecha o modal se o usuário clicar fora do modal
     window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+        if (event.target === document.getElementById("editProductModal")) {
+            document.getElementById("editProductModal").style.display = "none";
         }
-    }
+    };
 
-    // Adiciona evento de clique aos botões de edição
+    // Evento de clique para botões de edição
     document.querySelectorAll(".btn-editar").forEach(button => {
         button.onclick = function(event) {
             event.preventDefault();
-            // Obtém os dados do produto
-            var id = this.getAttribute("data-id");
-            var nome = this.getAttribute("data-nome");
-            var categoria = this.getAttribute("data-categoria");
-            var descricao = this.getAttribute("data-descricao");
-            var quantidade = this.getAttribute("data-quantidade");
-            
-            // Abre o modal e preenche os dados
-            openEditModal(id, nome, categoria, descricao, quantidade);
+            openEditModal(
+                this.getAttribute("data-id"),
+                this.getAttribute("data-nome"),
+                this.getAttribute("data-categoria"),
+                this.getAttribute("data-descricao"),
+                this.getAttribute("data-quantidade")
+            );
+        };
+    });
+
+    document.getElementById("button_excluir").onclick = function() {
+    var id = document.getElementById("modal-id").value;
+    var nome = document.getElementById("modal-nome").value; // Nome pode não ser necessário para a exclusão
+
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: `Você realmente deseja excluir o produto "${nome}"?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim, excluir!',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`backend/excluir_produto.php?id=${id}`, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire(
+                            'Excluído!',
+                            'O produto foi excluído com sucesso.',
+                            'success'
+                        ).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire(
+                            'Erro!',
+                            `Não foi possível excluir o produto: ${data.error}`,
+                            'error'
+                        );
+                    }
+                })
+                .catch(error => {
+                    Swal.fire(
+                        'Erro!',
+                        'Ocorreu um erro ao tentar excluir o produto.',
+                        'error'
+                    );
+                });
         }
     });
+};
 </script>
-
 </body>
 
 </html>
