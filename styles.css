@@ -57,10 +57,9 @@ body {
 .profile {
     margin-top: 2rem;
 }
-
 header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between; /* Alinha os itens nas extremidades */
     align-items: center;
     width: 68rem;
     margin: .6rem;
@@ -73,31 +72,51 @@ header {
 
 header input, header select {
     background-color: #d6d6d6;
-    height: 4rem;
-    width: 17rem;
+    height: 3rem;
     border-radius: .3rem;
 }
 
-header button {
+header input {
+    width: 12rem; /* Largura fixa para o input */
+}
+
+header select {
+    width: 12rem; /* Largura fixa para o select */
+}
+
+header button[type=submit] {
     background-color: #03658c;
     color: white;
     font-size: 1.2rem;
-    height: 4rem;
+    height: 3rem;
     width: 9rem;
     border-radius: .3rem;
 }
 
-header label {
-    font-size: 1.6rem;
-    color: #000000; /* Cor black para títulos */
+.add-button-container-ins {
+    margin-left: auto; /* Alinha o botão Inserir à direita */
+}
+
+header .add-button-ins {
+    text-align: center; /* Centraliza o texto */
+    background-color: #038c3d; /* Fundo verde */
+    color: white;
+    font-size: 1.2rem;
+    height: 3rem;
+    width: 9rem;
+    border-radius: .3rem;
+    display: flex; /* Flex para centralizar o texto */
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
 }
 
 header form {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 2rem;
+    gap: 2rem; /* Espaçamento entre os elementos */
+    flex-grow: 1; /* Permite que o formulário use o espaço disponível */
 }
+
 
 /* Container para centralizar o botão */
 .add-button-container {
@@ -137,6 +156,9 @@ table {
     width: 100%;
 }
 
+.btn-editar{
+    
+}
 .produtos-tabela th {
     padding-right: 7rem;
     font-size: 1.6rem;
@@ -154,6 +176,7 @@ table {
     height: 7rem;
     text-align: left;
 }
+
 
 /* Modal Container */
 .modal {

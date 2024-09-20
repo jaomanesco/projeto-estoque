@@ -62,14 +62,12 @@ $result = $conn->query($sql);
         </div>
     </div>
 
-<header>
+    <header>
     <form id="filtersForm" method="GET" action="">
         <div>
-            <label for="searchInput">Buscar</label>
-            <input type="text" id="searchInput" name="search" value="<?php echo htmlspecialchars($searchTerm); ?>">
+            <input type="text" id="searchInput" name="search" placeholder="Buscar" value="<?php echo htmlspecialchars($searchTerm); ?>">
         </div>
         <div>
-            <label for="categoryFilter">Categoria</label>
             <select id="categoryFilter" name="category">
                 <option value=""></option>
                 <?php
@@ -83,17 +81,14 @@ $result = $conn->query($sql);
                 ?>
             </select>    
         </div>
-
         <button type="submit">Buscar</button>
+        <div class="add-button-container-ins">
+            <a href="backend/inserir_produto.php" class="add-button-ins">Inserir</a>
+        </div>
     </form>
 </header>
 
-<div class="add-button-container">
-        <a href="backend/inserir_produto.php" class="add-button">
-            <img src="frontend/assets/mais.png" alt="Adicionar" class="add-button-image">
-            Adicione Aqui
-        </a>
-    </div>
+
 
 <div class="container">
     <table class="produtos-tabela">
@@ -119,7 +114,7 @@ $result = $conn->query($sql);
                     echo "<td>$quantidade</td>";
                     echo "<td>$categoria</td>";
                     echo "<td>";
-                    echo "<a href='#' class='btn-editar' data-id='$id' data-nome='$nome' data-categoria='$categoria' data-descricao='" . htmlspecialchars($row["descricao"]) . "' data-quantidade='$quantidade'><img src='frontend/assets/lapis.png' alt='Editar' /></a>";
+                    echo "<a href='#' class='btn-editar' data-id='$id' data-nome='$nome' data-categoria='$categoria' data-descricao='" . htmlspecialchars($row["descricao"]) . "' data-quantidade='$quantidade'><img src='frontend/assets/info.png' alt='Editar' /></a>";
                     echo "<a href='#' class='btn-excluir' data-id='$id' data-nome='$nome'> </a>";
                     echo "</td>";
                     echo "</tr>";
@@ -180,7 +175,7 @@ $result = $conn->query($sql);
         document.getElementById("modal-categoria").value = categoria;
         document.getElementById("modal-descricao").value = descricao;
         document.getElementById("modal-quantidade").value = quantidade;
-        document.getElementById("editProductModal").style.display = "block";
+        document.getElementById("editProductModal").style.display = "block"
     }
 
     // Função para fechar o modal
