@@ -71,6 +71,7 @@ header {
 }
 
 header input, header select {
+    padding-left: 1rem;
     background-color: #d6d6d6;
     height: 3rem;
     border-radius: .3rem;
@@ -156,8 +157,8 @@ table {
     width: 100%;
 }
 
-.btn-editar{
-    
+.btn-editar img{
+   width: 3rem;
 }
 .produtos-tabela th {
     padding-right: 7rem;
