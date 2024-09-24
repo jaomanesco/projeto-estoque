@@ -40,8 +40,6 @@ $result = $conn->query($sql);
     <title>Listar Produtos</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="frontend/css/output.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -77,7 +75,7 @@ $result = $conn->query($sql);
             </select>    
             <button type="submit">Buscar</button>
             <div class="add-button-container-ins">
-                <a href="backend/inserir_produto.php" class="add-button-ins">Inserir</a>
+                <button id="openInsertModal" class="add-button-ins">Inserir</button>
             </div>
         </form>
     </header>
@@ -105,15 +103,7 @@ $result = $conn->query($sql);
                                 <td>$quantidade</td>
                                 <td>$categoria</td>
                                 <td>
-                                    <a href='#' class='btn-editar' 
-                                       data-id='$id' 
-                                       data-nome='$nome' 
-                                       data-categoria='$categoria' 
-                                       data-descricao='" . htmlspecialchars($row["descricao"]) . "' 
-                                       data-quantidade='$quantidade'>
-                                        <img src='frontend/assets/info.png' alt='Editar' />
-                                    </a>
-                                    <a href='#' class='btn-excluir' data-id='$id' data-nome='$nome'></a>
+                                    <button class='btn-editar'>editar</button>
                                 </td>
                               </tr>";
                     }
@@ -123,135 +113,119 @@ $result = $conn->query($sql);
                 ?>
             </tbody>
         </table>
+        <!-- Modal para editar produto -->
+        <div id="editModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" id="closeModal">&times;</span>
+                <h2>Detalhes</h2>
+                <form id="editForm">
+                    <div class="form-group">
+                        <label for="editNome">Nome</label>
+                        <input type="text" id="editNome" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editQuantidade">Quantidade</label>
+                        <input type="number" id="editQuantidade" name="quantidade" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCategoria">Categoria</label>
+                        <input type="text" id="editCategoria" name="categoria" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDescricao">Descrição</label>
+                        <textarea id="texte" name="story" rows="5" cols="33"></textarea>
+                    </div>
+                    <div class="button-container">
+                        <input type="submit" value="Salvar">
+                        <input type="submit" value="Excluir">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal para Inserir Produto -->
+        <div id="insertModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" id="closeInsertModal">&times;</span>
+                <h2>Adicionar item</h2>
+                <form id="insertForm">
+                    <div class="form-group">
+                        <label for="insertNome">Nome:</label>
+                        <input type="text" id="insertNome" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="insertQuantidade">Quantidade:</label>
+                        <input type="number" id="insertQuantidade" name="quantidade" required>
+
+                        <label for="insertCategoria">Categoria:</label>
+                        <input type="text" id="insertCategoria" name="categoria" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDescricao">Descrição</label>
+                        <textarea id="texte" name="story" rows="5" cols="33"></textarea>
+                    </div>
+                    <div class="button-container">
+                        <input type="submit" value="Salvar">
+                        <input type="submit" value="Excluir">
+                </form>
+            </div>
+        </div>
+
         <a href="backend/inserir_produto.php" class="btn-adicionar">Adicionar Novo Produto</a>
         <footer>
             <p>&copy; <?php echo date('Y'); ?> Empresa XYZ</p>
             <p><a href="backend/logout.php">Logout</a></p>
         </footer>
     </div>
-
-    <!-- Modal para Editar Produto -->
-    <div id="editProductModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Edite Aqui</h2>
-            <form id="editProductForm" method="post" action="backend/processar_atualizacao.php">
-                <input type="hidden" id="modal-id" name="id">
-                
-                <div class="form-group">
-                    <label for="modal-nome">Nome</label>
-                    <input type="text" id="modal-nome" name="nome" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="modal-quantidade">Quantidade</label>
-                    <input type="number" id="modal-quantidade" name="quantidade" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="modal-categoria">Categoria</label>
-                    <input type="text" id="modal-categoria" name="categoria" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="modal-descricao">Descrição</label>
-                    <textarea id="modal-descricao" name="descricao" rows="4" cols="50"></textarea>
-                </div>
-                
-                <div class="button-container">
-                    <?php
-                    echo '<input id="button_excluir" type="button" value="Excluir">';
-                    echo '<input type="submit" value="Editar">';
-                    ?>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <script>
-        // Função para abrir o modal e preencher os campos
-        function openEditModal(id, nome, categoria, descricao, quantidade) {
-            document.getElementById("modal-id").value = id;
-            document.getElementById("modal-nome").value = nome;
-            document.getElementById("modal-categoria").value = categoria;
-            document.getElementById("modal-descricao").value = descricao;
-            document.getElementById("modal-quantidade").value = quantidade;
-            document.getElementById("editProductModal").style.display = "block";
+        // Função para abrir o modal
+        function openModal(nome, quantidade, categoria) {
+            document.getElementById('editNome').value = nome;
+            document.getElementById('editQuantidade').value = quantidade;
+            document.getElementById('editCategoria').value = categoria;
+            document.getElementById('editModal').style.display = 'flex';
         }
 
-        // Evento de clique apenas na imagem de editar
-        document.querySelectorAll(".btn-editar img").forEach(img => {
-            img.onclick = function(event) {
-                event.preventDefault(); // Impede a ação padrão do link
-                event.stopPropagation(); // Impede a propagação do evento para outros elementos
-                const btn = this.closest('.btn-editar'); // Acessa o botão pai
-                openEditModal(
-                    btn.getAttribute("data-id"),
-                    btn.getAttribute("data-nome"),
-                    btn.getAttribute("data-categoria"),
-                    btn.getAttribute("data-descricao"),
-                    btn.getAttribute("data-quantidade")
-                );
-            };
+        // Adiciona evento de clique a cada botão "Editar"
+        document.querySelectorAll('.btn-editar').forEach(button => {
+            button.addEventListener('click', function() {
+                const row = button.closest('tr');
+                const nome = row.cells[0].innerText;
+                const quantidade = row.cells[1].innerText;
+                const categoria = row.cells[2].innerText;
+
+                openModal(nome, quantidade, categoria);
+            });
         });
 
-        // Função para fechar o modal ao clicar no 'x'
-        document.getElementsByClassName("close")[0].onclick = function() {
-            document.getElementById("editProductModal").style.display = "none";
-        };
+        // Fecha o modal
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('editModal').style.display = 'none';
+        });
 
-        // Fecha o modal se clicar fora dele
+        // Fecha o modal ao clicar fora dele
         window.onclick = function(event) {
-            const modal = document.getElementById("editProductModal");
-            if (event.target === modal) {
-                modal.style.display = "none";
+            if (event.target == document.getElementById('editModal')) {
+                document.getElementById('editModal').style.display = 'none';
             }
         };
 
-        // Evento de exclusão com SweetAlert2
-        document.getElementById("button_excluir").onclick = function() {
-            var id = document.getElementById("modal-id").value;
-            var nome = document.getElementById("modal-nome").value;
+        // Função para abrir o modal de inserir
+        document.getElementById('openInsertModal').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('insertModal').style.display = 'flex';
+        });
 
-            Swal.fire({
-                title: 'Tem certeza?',
-                text: `Você realmente deseja excluir o produto "${nome}"?`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sim, excluir!',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    fetch(`backend/excluir_produto.php?id=${id}`, { method: 'POST' })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                Swal.fire(
-                                    'Excluído!',
-                                    'O produto foi excluído com sucesso.',
-                                    'success'
-                                ).then(() => {
-                                    window.location.reload();
-                                });
-                            } else {
-                                Swal.fire(
-                                    'Erro!',
-                                    `Não foi possível excluir o produto: ${data.error}`,
-                                    'error'
-                                );
-                            }
-                        })
-                        .catch(error => {
-                            Swal.fire(
-                                'Erro!',
-                                'Ocorreu um erro ao tentar excluir o produto.',
-                                'error'
-                            );
-                        });
-                }
-            });
+        // Fechar o modal de inserir
+        document.getElementById('closeInsertModal').addEventListener('click', function() {
+            document.getElementById('insertModal').style.display = 'none';
+        });
+
+        // Fechar o modal de inserir ao clicar fora dele
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('insertModal')) {
+                document.getElementById('insertModal').style.display = 'none';
+            }
         };
     </script>
 </body>
