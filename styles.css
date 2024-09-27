@@ -169,54 +169,95 @@ table {
     justify-content: center;
 }
 
-/* Modal Content */
 .modal-content {
     display: flex;
     flex-direction: column;
     background-color: #ffffff;
-    width: 600px;
+    width: 800px; /* Largura do modal */
+    height: auto; /* Altura automática para conteúdo */
+    max-height: none; /* Remova ou ajuste a altura máxima */
+    overflow-y: hidden; /* Remove a rolagem vertical */
     border-radius: 10px;
-    padding: 3rem;
-    box-shadow: var(--box-shadow);
+    padding: 1.5rem; /* Ajuste conforme necessário */
 }
 
-/* Estilos dos Inputs */
-.modal-content input {
-    width: 100%;
-    padding: 0.5rem;
+#insertModal h2 {
+    font-size: 2rem;
+    padding: 1rem 0; /* Ajuste o valor conforme necessário */
+    margin-bottom: 1.5rem; /* Para aumentar o espaço abaixo do título */
+}
+
+/* Estilos dos Inputs e Textarea */
+.form-group input, .form-group textarea {
+    width: calc(100% - 20px); /* Aumenta a largura dos inputs */
+    height: 3rem;
+    padding: 0.75rem; /* Padding ajustado */
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #d6d6d6;
 }
 
-/* Botões do Modal */
-.button-container {
-    display: flex;
-    width: 5rem;
-    background-color: black;
+/* Ajuste específico para o textarea */
+.modal-content textarea {
+    height: 100px; /* Altura do textarea ajustada */
 }
 
-.btn-delete, .btn-edit, .btn-add {
-    background-color: #038c3d;
+.flex-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.flex-row label {
+    width: 100px; /* Largura fixa para os labels */
+    margin-right: 1rem; /* Espaçamento à direita do label */
+}
+
+.flex-row input.qntd-input {
+    width: 70%; /* Ajuste a largura conforme necessário */
+    padding-left: 0.5rem; /* Adicione um pouco de padding à esquerda */
+    margin-left: 0; /* Remova qualquer margem à esquerda que possa estar afetando */
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end; /* Alinha os botões à direita */
+    margin-top: auto; /* Empurra os botões para o final do modal */
+}
+
+.btn-delete, .btn-add {
+    background-color: #038c3d; /* Verde para o botão adicionar */
     color: white;
-    font-size: 1.2rem;
-    height: 1.5rem;
-    width: 1rem;
-    border-radius: 0.3rem;
+    font-size: 1.2rem; /* Tamanho de fonte igual aos botões da header */
+    border-radius: .3rem; /* Arredondar bordas */
     border: none;
+    padding: 0.75rem 1rem; /* Dimensões iguais aos botões da header */
+    margin-left: 0.5rem; /* Espaçamento entre os botões */
     cursor: pointer;
-    transition: background-color 0.3s;
+    width: auto; /* Largura automática */
+    height: 3rem; /* Mesma altura dos botões da header */
 }
 
 .btn-delete {
-    background-color: #c0392b;
+    background-color: #c0392b; /* Vermelho para o botão excluir */
+}
+
+.modal-content input[type="submit"], .modal-content input[type="button"] {
+    width: auto; /* Ajusta a largura dos botões para automática */
 }
 
 .close {
     cursor: pointer;
     font-size: 1.5rem;
-    color: #03658c;
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
+    color: #03658c; /* Cor azul */
+    position: absolute; /* Para que possamos posicioná-lo */
+    right: 1rem; /* Distância da borda direita */
+    top: 1rem; /* Distância do topo */
+    background: none; /* Remover qualquer fundo */
+    border: none; /* Remover borda */
+    padding: 0; /* Remover padding */
+}
+
+#insertQuantidade {
+    width: 20rem; /* Ajuste a largura conforme necessário */
 }

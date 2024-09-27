@@ -142,41 +142,35 @@ $result = $conn->query($sql);
                 </form>
             </div>
         </div>
-
-        <!-- Modal para Inserir Produto -->
+        
+        
         <div id="insertModal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <span class="close" id="closeInsertModal">&times;</span>
-                <h2>Adicionar item</h2>
-                <form id="insertForm">
-                    <div class="form-group">
-                        <label for="insertNome">Nome:</label>
-                        <input type="text" id="insertNome" name="nome" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="insertQuantidade">Quantidade:</label>
-                        <input type="number" id="insertQuantidade" name="quantidade" required>
-
-                        <label for="insertCategoria">Categoria:</label>
-                        <input type="text" id="insertCategoria" name="categoria" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="editDescricao">Descrição</label>
-                        <textarea id="texte" name="story" rows="5" cols="33"></textarea>
-                    </div>
-                    <div class="button-container">
-                        <input type="submit" value="Salvar">
-                        <input type="submit" value="Excluir">
-                </form>
+    <div class="modal-content">
+        <span class="close" id="closeInsertModal">&times;</span>
+        <h2>Adicionar item</h2>
+        <form id="insertForm">
+            <div class="form-group flex-row">
+                <label for="insertNome">Nome:</label>
+                <input type="text" id="insertNome" name="nome" required>
             </div>
-        </div>
-
-        <a href="backend/inserir_produto.php" class="btn-adicionar">Adicionar Novo Produto</a>
-        <footer>
-            <p>&copy; <?php echo date('Y'); ?> Empresa XYZ</p>
-            <p><a href="backend/logout.php">Logout</a></p>
-        </footer>
+            <div class="form-group flex-row">
+                <label for="insertQuantidade">Qntd:</label>
+                <input type="number" class="qntd-input" name="quantidade" required>
+                <label for="insertCategoria">Grupo:</label>
+                <input type="text" id="insertCategoria" name="categoria" required>
+            </div>
+            <div class="form-group flex-row">
+                <label for="editDescricao">Desc:</label>
+                <textarea id="texte" name="story" rows="4" required></textarea>
+            </div>
+            <div class="button-container">
+                <input type="submit" value="Salvar" class="btn-add">
+                <input type="button" value="Excluir" class="btn-delete">
+            </div>
+        </form>
     </div>
+</div>
+
     <script>
         // Função para abrir o modal
         function openModal(nome, quantidade, categoria) {
