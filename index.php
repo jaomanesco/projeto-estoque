@@ -73,9 +73,9 @@ $result = $conn->query($sql);
                 }
                 ?>
             </select>    
-            <button type="submit">Buscar</button>
+            <button id="busca" type="submit">Buscar</button>
             <div class="add-button-container-ins">
-                <button id="openInsertModal" class="add-button-ins">Inserir</button>
+                <button type="submit" id="openInsertModal" class="add-button-ins">Inserir</button>
             </div>
         </form>
     </header>
@@ -85,7 +85,7 @@ $result = $conn->query($sql);
             <thead>
                 <tr>
                     <th>Nome</th>
-                    <th>Qtd.</th>
+                    <th>Quant.</th>
                     <th>Categoria</th>
                     <th>Ações</th>
                 </tr>
@@ -98,14 +98,16 @@ $result = $conn->query($sql);
                         $nome = htmlspecialchars($row["nome"]);
                         $quantidade = htmlspecialchars($row["quantidade"]);
                         $categoria = htmlspecialchars($row["categoria"]);
-                        echo "<tr>
-                                <td>$nome</td>
-                                <td>$quantidade</td>
-                                <td>$categoria</td>
-                                <td>
-                                    <button class='btn-editar'>editar</button>
-                                </td>
-                              </tr>";
+                        echo "<tr data-id='$id'>
+                        <td>$nome</td>
+                        <td>$quantidade</td>
+                        <td>$categoria</td>
+                        <td>
+                            <button class='btn-editar'>
+                                <img src='frontend/assets/info.png' alt='Editar'/>
+                            </button>
+                        </td>
+                      </tr>";                
                     }
                 } else {
                     echo "<tr><td colspan='4'>Nenhum produto encontrado.</td></tr>";
@@ -113,38 +115,36 @@ $result = $conn->query($sql);
                 ?>
             </tbody>
         </table>
-        <!-- Modal para editar produto -->
+
         <div id="editModal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <span class="close" id="closeModal">&times;</span>
-                <h2>Detalhes</h2>
-                <form id="editForm">
-                    <div class="form-group">
-                        <label for="editNome">Nome</label>
-                        <input type="text" id="editNome" name="nome" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="editQuantidade">Quantidade</label>
-                        <input type="number" id="editQuantidade" name="quantidade" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="editCategoria">Categoria</label>
-                        <input type="text" id="editCategoria" name="categoria" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="editDescricao">Descrição</label>
-                        <textarea id="texte" name="story" rows="5" cols="33"></textarea>
-                    </div>
-                    <div class="button-container">
-                        <input type="submit" value="Salvar">
-                        <input type="submit" value="Excluir">
-                    </div>
-                </form>
+    <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <h2>Editar item</h2>
+        <form id="editForm">
+            <div class="form-group flex-row">
+                <label for="editNome">Nome:</label>
+                <input type="text" id="editNome" name="nome" required>
             </div>
-        </div>
-        
-        
-        <div id="insertModal" class="modal" style="display: none;">
+            <div class="form-group flex-row">
+                <label for="editQuantidade">Qntd:</label>
+                <input type="number" id="editQuantidade" name="quantidade" required>
+                <label for="editCategoria">Grupo:</label>
+                <input type="text" id="editCategoria" name="categoria" required>
+            </div>
+            <div class="form-group flex-row">
+                <label for="editDescricao">Descrição:</label>
+                <textarea id="editDescricao" name="descricao" rows="4" required></textarea>
+            </div>
+            <div class="button-container">
+                <input type="submit" value="Salvar" class="btn-add">
+                <input type="button" value="Excluir" class="btn-delete" id="btnDeleteEdit" data-id="">
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="insertModal" class="modal" style="display: none;">
     <div class="modal-content">
         <span class="close" id="closeInsertModal">&times;</span>
         <h2>Adicionar item</h2>
@@ -164,21 +164,55 @@ $result = $conn->query($sql);
                 <textarea id="texte" name="story" rows="4" required></textarea>
             </div>
             <div class="button-container">
-                <input type="submit" value="Salvar" class="btn-add">
-                <input type="button" value="Excluir" class="btn-delete">
+                <input type="submit" value="Adicionar" class="btn-add-full">
             </div>
         </form>
     </div>
 </div>
 
+
     <script>
-        // Função para abrir o modal
-        function openModal(nome, quantidade, categoria) {
-            document.getElementById('editNome').value = nome;
-            document.getElementById('editQuantidade').value = quantidade;
-            document.getElementById('editCategoria').value = categoria;
-            document.getElementById('editModal').style.display = 'flex';
-        }
+        // Adiciona evento ao botão "Excluir"
+document.getElementById('btnDeleteEdit').addEventListener('click', function() {
+    const id = document.getElementById('btnDeleteEdit').getAttribute('data-id'); // Obter o ID do produto
+    
+    if (confirm('Tem certeza que deseja excluir este produto?')) {
+        fetch(`excluir_produto.php?id=${id}`, {
+            method: 'GET',
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Produto excluído com sucesso!');
+                // Atualize a tabela ou remova a linha correspondente
+                const row = document.querySelector(`tr[data-id='${id}']`);
+                if (row) {
+                    row.remove(); // Remove a linha da tabela
+                }
+                closeModal('editModal'); // Feche o modal após a ação
+            } else {
+                alert(`Erro: ${data.error}`);
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Ocorreu um erro ao excluir o produto.');
+        });
+    }
+});
+
+// Função para fechar o modal
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+function openModal(nome, quantidade, categoria, id) {
+    document.getElementById('editNome').value = nome;
+    document.getElementById('editQuantidade').value = quantidade;
+    document.getElementById('editCategoria').value = categoria;
+    document.getElementById('btnDeleteEdit').setAttribute('data-id', id); // Adicione esta linha
+    document.getElementById('editModal').style.display = 'flex';
+}
 
         // Adiciona evento de clique a cada botão "Editar"
         document.querySelectorAll('.btn-editar').forEach(button => {
@@ -197,12 +231,18 @@ $result = $conn->query($sql);
             document.getElementById('editModal').style.display = 'none';
         });
 
-        // Fecha o modal ao clicar fora dele
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('editModal')) {
-                document.getElementById('editModal').style.display = 'none';
-            }
-        };
+// Fecha o modal ao clicar no "X"
+document.getElementById('closeModal').addEventListener('click', function() {
+    document.getElementById('editModal').style.display = 'none';
+});
+
+// Fecha o modal ao clicar fora dele
+window.onclick = function(event) {
+    if (event.target == document.getElementById('editModal')) {
+        document.getElementById('editModal').style.display = 'none';
+    }
+};
+
 
         // Função para abrir o modal de inserir
         document.getElementById('openInsertModal').addEventListener('click', function(event) {
@@ -221,6 +261,7 @@ $result = $conn->query($sql);
                 document.getElementById('insertModal').style.display = 'none';
             }
         };
+
     </script>
 </body>
 </html>
