@@ -9,16 +9,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $descricao = $_POST['descricao'];
         $quantidade = intval($_POST['quantidade']);
 
-        // Prepara e executa a atualização do produto
+        // Prepara a consulta de atualização
         $stmt = $conn->prepare("UPDATE produtos SET nome = ?, categoria = ?, descricao = ?, quantidade = ? WHERE id = ?");
-        $stmt->bind_param("sssii", $nome, $categoria, $descricao, $quantidade, $id);
+        $stmt->bind_param("ssssi", $nome, $categoria, $descricao, $quantidade, $id);
 
         if ($stmt->execute()) {
             // Redireciona para a página de listagem com uma mensagem de sucesso
             header("Location: ../index.php?msg=" . urlencode("Produto atualizado com sucesso!"));
             exit();
         } else {
-            echo "Erro ao atualizar produto: " . $stmt->error;
+            echo "Erro ao atualizar produto: " . htmlspecialchars($stmt->error);
         }
 
         // Fecha a statement
@@ -32,4 +32,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Fecha a conexão
 $conn->close();
-
+?>

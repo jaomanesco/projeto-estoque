@@ -10,6 +10,7 @@ if (!isset($_SESSION['usuario_logado'])) {
     exit();
 }
 
+
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = intval($_GET['id']);
 
@@ -30,31 +31,5 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 } else {
     echo json_encode(['success' => false, 'error' => 'ID do produto não especificado ou inválido.']);
 }
-
-document.getElementById('btnDelete').addEventListener('click', function() {
-    const id = /* Obtenha o ID do produto que você deseja excluir */;
-    
-    if (confirm('Tem certeza que deseja excluir este produto?')) {
-        fetch(`excluir_produto.php?id=${id}`, {
-            method: 'GET',
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Produto excluído com sucesso!');
-                // Você pode atualizar a tabela ou remover a linha correspondente
-                // Atualize a visualização aqui
-                closeModal('insertModal'); // Feche o modal após a ação
-            } else {
-                alert(`Erro: ${data.error}`);
-            }
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-            alert('Ocorreu um erro ao excluir o produto.');
-        });
-    }
-});
-
 
 $conn->close();

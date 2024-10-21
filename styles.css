@@ -1,7 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Open+Sans:wght@300..800&display=swap');
 
 :root {
     --box-shadow: 4px 4px 4px #00000020;
+    --primary-color: #03658c; /* Cor principal */
+    --secondary-color: #038c3d; /* Cor secundária */
+    --error-color: #c0392b; /* Cor de erro */
+    --light-background: #ececec; /* Fundo claro */
+    --modal-background: #ffffff; /* Fundo do modal */
 }
 
 * {
@@ -10,29 +15,33 @@
     text-decoration: none;
     border: none;
     box-sizing: border-box;
-    font-family: "Montserrat";
+    font-family: "Montserrat", sans-serif;
 }
 
 body {
+    padding-top: 7rem; /* Altura da navbar */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: sans-serif;
-    background-color: #ececec;
+    background-color: var(--light-background);
     min-height: 100vh;
 }
 
 .container {
     font-size: 1.2rem;
-    margin: .6rem;
-    background-color: #fff;
+    margin: 1rem; /* Aumentado para mais espaço */
+    background-color: var(--modal-background);
     border-radius: 8px;
     box-shadow: var(--box-shadow);
     width: 68rem;
 }
 
 .navbar {
+    position: fixed; /* Fixar a navbar */
+    top: 0; /* Posiciona no topo */
+    left: 0; /* Posiciona à esquerda */
+    z-index: 1000; /* Garante que fique acima de outros elementos */
     display: flex;
     background-color: #ffffff;
     width: 100%;
@@ -40,7 +49,24 @@ body {
     justify-content: space-between;
     padding: 1rem;
     align-items: center;
-    box-shadow: 4px 4px 4px #00000020;
+    box-shadow: var(--box-shadow);
+}
+
+.links a {
+    color: black; /* Corrigido para color */
+    padding: 10px; /* Espaçamento interno para os links */
+    position: relative; /* Necessário para o pseudo-elemento */
+}
+
+.links a.active::after {
+    content: ''; /* Necessário para criar uma linha */
+    display: block; /* Faz a linha aparecer como um bloco */
+    height: 2px; /* Espessura da linha */
+    background: #000; /* Cor da linha */
+    position: absolute; /* Posiciona a linha em relação ao link */
+    left: 0; /* Alinha à esquerda */
+    right: 0; /* Estica até a direita */
+    bottom: -5px; /* Ajuste aqui para encostar mais a linha */
 }
 
 .links {
@@ -49,7 +75,8 @@ body {
     gap: 2rem;
 }
 
-.logo, .profile {
+.logo,
+.profile {
     height: 7rem;
     width: 7rem;
 }
@@ -63,7 +90,7 @@ header {
     justify-content: space-between;
     align-items: center;
     width: 68rem;
-    margin: .6rem;
+    margin: 0.6rem;
     background-color: #ffffff;
     padding: 2rem;
     border-radius: 8px;
@@ -71,11 +98,12 @@ header {
     margin-top: 4rem;
 }
 
-header input, header select {
+header input,
+header select {
     padding-left: 1rem;
     background-color: #d6d6d6;
     height: 3rem;
-    border-radius: .3rem;
+    border-radius: 0.3rem;
 }
 
 header input {
@@ -87,25 +115,46 @@ header select {
 }
 
 header #busca {
-    background-color: #03658c;
+    background-color: var(--primary-color);
     color: white;
     font-size: 1.2rem;
     height: 3rem;
     width: 9rem;
-    border-radius: .3rem;
+    border-radius: 0.3rem;
+}
+
+header #busca:hover {
+    background-color: #025b7d; /* Efeito de hover */
+}
+
+#categoryFilter {
+    font-size: 16px; /* Ajuste o tamanho da fonte do select */
+}
+
+#categoryFilter option {
+    color: #000; /* Cor das opções */
+}
+
+#categoryFilter option:disabled {
+    color: #999; /* Cor para a opção "Filtrar" */
+    font-style: italic; /* Itálico para destacar */
 }
 
 .add-button-container-ins {
     display: flex;
-    background-color: #038c3d;
+    background-color: var(--secondary-color);
     color: white;
     font-size: 1.2rem;
     justify-content: center;
     align-items: center;
     height: 3rem;
     width: 9rem;
-    border-radius: .3rem;
+    border-radius: 0.3rem;
     margin-left: auto;
+}
+
+.add-button-container-ins:hover {
+    background-color: #027d2b; /* Efeito de hover */
 }
 
 header form {
@@ -115,31 +164,19 @@ header form {
     flex-grow: 1;
 }
 
-.openInsertModal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.add-button-image {
-    height: 2rem;
-    width: 2rem;
-    margin-right: 0.5rem;
-}
-
 table {
     width: 100%;
 }
 
 .btn-editar img {
-   width: 2.5rem;
+    width: 2.5rem;
 }
 
 .produtos-tabela th {
     padding-right: 7rem;
     font-size: 1.6rem;
     color: #fff;
-    background-color: #03658c;
+    background-color: var(--primary-color);
     height: 6rem;
 }
 
@@ -153,7 +190,6 @@ table {
     text-align: left;
 }
 
-/* Modal Container */
 .modal {
     display: none;
     position: fixed;
@@ -170,140 +206,125 @@ table {
 }
 
 .modal-content {
+    position: relative; /* Adiciona posição relativa ao contêiner do modal */
+    background-color: var(--modal-background);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--box-shadow);
+}
+
+.modal-content h2 {
+    font-size: 2.6rem; /* Tamanho da fonte */
+    color: #333; /* Cor mais escura */
+    padding-bottom: 3rem;
+}
+
+.modal-content .form-group {
     display: flex;
-    flex-direction: column;
-    background-color: #ffffff;
-    width: 800px; /* Largura do modal */
-    height: auto; /* Altura automática para conteúdo */
-    max-height: none; /* Remova ou ajuste a altura máxima */
-    overflow-y: hidden; /* Remove a rolagem vertical */
-    border-radius: 10px;
-    padding: 1.5rem; /* Ajuste conforme necessário */
+    align-items: center; /* Alinha verticalmente */
+    margin-bottom: 1rem; /* Espaço entre os grupos de campos */
 }
 
-#insertModal h2 {
-    font-size: 2rem;
-    padding: 1rem 0; /* Ajuste o valor conforme necessário */
-    margin-bottom: 1.5rem; /* Para aumentar o espaço abaixo do título */
+.modal-content .form-group label {
+    margin-right: 0.5rem; /* Espaço menor entre o label e o input */
+    width: auto; /* Ajusta a largura do label conforme o conteúdo */
 }
 
-/* Estilos dos Inputs e Textarea */
-.form-group input, .form-group textarea {
-    width: calc(100% - 20px); /* Aumenta a largura dos inputs */
-    height: 3rem;
-    padding: 0.75rem; /* Padding ajustado */
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.modal-content .form-group input,
+.modal-content .form-group select,
+.modal-content .form-group textarea {
     background-color: #d6d6d6;
+    flex: 1; /* Faz o input/textarea preencher o espaço restante */
+    height: 3rem; /* Altura uniforme */
+    padding-left: 1rem; /* Espaço interno */
+    border-radius: 0.3rem; /* Bordas arredondadas */
 }
 
-/* Ajuste específico para o textarea */
-.modal-content textarea {
-    height: 100px; /* Altura do textarea ajustada */
+.modal-content .form-group textarea {
+    height: 4rem;
 }
 
-.flex-row {
+.modal-content .flex-row {
     display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
+    justify-content: space-between; /* Distribui o espaço entre os inputs */
 }
 
-.flex-row label {
-    width: 100px; /* Largura fixa para os labels */
-    margin-right: 1rem; /* Espaçamento à direita do label */
+.modal-content .flex-row .form-group {
+    flex: 1; /* Faz o grupo ocupar o mesmo espaço */
+    margin-right: 1rem; /* Espaço entre os grupos */
 }
 
-.flex-row input.qntd-input {
-    width: 70%; /* Ajuste a largura conforme necessário */
-    padding-left: 0.5rem; /* Adicione um pouco de padding à esquerda */
-    margin-left: 0; /* Remova qualquer margem à esquerda que possa estar afetando */
+.modal-content #modalQuantidade {
+    width: 30%; /* Ajuste a largura conforme necessário */
+}
+
+.modal-content #modalCategoria {
+    width: 65%; /* A largura do grupo categoria pode ser maior */
+}
+
+.modal-content .flex-row .form-group:last-child {
+    margin-right: 0; /* Remove o espaço do último grupo */
 }
 
 .button-container {
     display: flex;
-    justify-content: flex-end; /* Alinha os botões à direita */
-    margin-top: auto; /* Empurra os botões para o final do modal */
-}
-
-.btn-delete, .btn-add {
-    background-color: #038c3d; /* Verde para o botão adicionar */
-    color: white;
-    font-size: 1.2rem; /* Tamanho de fonte igual aos botões da header */
-    border-radius: .3rem; /* Arredondar bordas */
-    border: none;
-    padding: 0.75rem 1rem; /* Dimensões iguais aos botões da header */
-    margin-left: 0.5rem; /* Espaçamento entre os botões */
-    cursor: pointer;
-    width: auto; /* Largura automática */
-    height: 3rem; /* Mesma altura dos botões da header */
+    justify-content: right; /* Centraliza os botões */
+    gap: 1rem; /* Espaço entre os botões */
+    margin-top: 2rem; /* Espaço acima dos botões */
 }
 
 .btn-delete {
-    background-color: #c0392b; /* Vermelho para o botão excluir */
-}
-
-.btn-add-full {
-    background-color: #038c3d; /* Verde */
+    background-color: var(--error-color); 
     color: white;
-    font-size: 1.2rem; /* Tamanho da fonte */
-    border-radius: .3rem; /* Bordas arredondadas */
-    border: none; /* Sem borda */
-    padding: 0.75rem; /* Padding vertical */
-    width: calc(100% - 20px); /* Largura total do botão */
-    cursor: pointer; /* Cursor pointer ao passar o mouse */
+    font-size: 1.2rem; 
+    border-radius: 0.3rem; 
+    border: none;
+    padding: 0.75rem 1.5rem; /* Aumentei a largura do padding */
+    cursor: pointer;
+    height: 3.5rem; 
+    min-width: 8rem; /* Definindo uma largura mínima para o botão */
+    box-shadow: var(--box-shadow);
 }
 
-.modal-content input[type="submit"], .modal-content input[type="button"] {
-    width: auto; /* Ajusta a largura dos botões para automática */
+.btn-delete:hover {
+    background-color: #d53131; /* Efeito de hover */
+}
+
+.btn-edit,
+.btn-add {
+    background-color: var(--secondary-color); /* Cor verde */
+    color: white; /* Cor do texto */
+    font-size: 1.2rem; /* Tamanho da fonte */
+    border-radius: 0.3rem; /* Bordas arredondadas */
+    border: none; /* Sem borda */
+    padding: 0.75rem 1rem; /* Espaçamento interno */
+    cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+    height: 3.5rem; 
+    width: 8rem;
+    box-shadow: var(--box-shadow);
+}
+
+.btn-cancel {
+    background-color: rgb(174, 173, 173);
+    color: white;
+    border-radius: 0.3rem; 
+    padding: 0.75rem 1rem; /* Espaçamento interno */
+    height: 3.5rem; 
+}
+
+.btn-edit:hover,
+.btn-add:hover {
+    background-color: #027d2b; /* Efeito de hover */
 }
 
 .close {
-        cursor: pointer;
-        font-size: 1.5rem;
-        color: #03658c; /* Cor azul */
-        position: absolute; /* Para que possamos posicioná-lo */
-        right: 1rem; /* Distância da borda direita */
-        top: 1rem; /* Distância do topo */
-        background: none; /* Remover qualquer fundo */
-        border: none; /* Remover borda */
-        padding: 0; /* Remover padding */
-        z-index: 1001; /* Garantir que esteja acima do modal */
+    cursor: pointer;
+    font-size: 2rem;
+    position: absolute; /* Agora está posicionado de forma absoluta */
+    top: 1rem; /* Ajusta a distância do topo */
+    right: 1rem; /* Ajusta a distância da direita */
 }
 
-#insertQuantidade {
-    width: 20rem; /* Ajuste a largura conforme necessário */
+.close:hover {
+    color: red; 
 }
-
-/* Para navegadores WebKit (Chrome, Safari) */
-::-webkit-scrollbar {
-    width: 12px; /* Largura da scrollbar */
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Cor do fundo da scrollbar */
-}
-
-::-webkit-scrollbar-thumb {
-    background: #03658c; /* Cor da barra de rolagem */
-    border-radius: 10px; /* Bordas arredondadas */
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #025e7a; /* Cor ao passar o mouse */
-}
-
-.modal {
-    display: none; /* Inicialmente oculto */
-    position: fixed;
-    z-index: 1000; /* O modal deve estar acima de outros elementos */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro */
-    backdrop-filter: blur(5px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
